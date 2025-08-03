@@ -46,10 +46,10 @@ const Login = ({ setCurrentPage }) => {
         if (role === "admin") {
           setOpenAuthForm(false);
           navigate("/admin/dashboard");
+        } else {
+          setOpenAuthForm(false);
+          navigate("/");
         }
-
-        navigate("/");
-        setOpenAuthForm(false);
       }
     } catch (error) {
       if (error.response && error.response.data.message) {

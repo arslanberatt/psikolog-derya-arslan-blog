@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 
 const ProfileInfoCard = () => {
-  const { user, setOpenAuthForm } = useContext(UserContext);
+  const { user, setUser, setOpenAuthForm } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.clear();
-    clearUser();
+    setUser(null);
+    setOpenSideMenu((prevState) => !prevState);
     navigate("/");
   };
 
@@ -20,7 +21,7 @@ const ProfileInfoCard = () => {
         </div>
         <button
           className="text-red-600 text-sm font-semibold cursor-pointer hover:underline"
-          onClick={handleLogout}
+          onClick={() => handleLogout()}
         >
           Çıkış Yap
         </button>
