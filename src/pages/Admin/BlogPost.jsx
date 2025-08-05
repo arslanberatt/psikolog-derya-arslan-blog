@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { useNavigate } from "react-router-dom";
-import { LuPlus } from "react-icons/lu";
+import { LuGalleryVerticalEnd, LuLoaderCircle, LuPlus } from "react-icons/lu";
 import Tabs from "../../components/Tabs";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import moment from "moment";
 import BlogPostSummaryCard from "../../components/Cards/BlogPostSummaryCard";
+import DeleteAlertContent from "../../components/DeleteAlertContent";
+import Modal from "../../components/Modal";
+import { toast } from "react-toastify";
 
 const BlogPost = () => {
   const navigate = useNavigate();
@@ -42,9 +45,17 @@ const BlogPost = () => {
       const statusSummary = counts || {};
 
       const statusArray = [
-        { label: "Tümü", count: statusSummary.all || 0 },
-        { label: "Yayınlananlar", count: statusSummary.published || 0 },
-        { label: "Yayınlanmayanlar", count: statusSummary.draft || 0 },
+        { label: "all", title: "Tümü", count: statusSummary.all || 0 },
+        {
+          label: "published",
+          title: "Yayınlananlar",
+          count: statusSummary.published || 0,
+        },
+        {
+          label: "draft",
+          title: "Yayınlanmayanlar",
+          count: statusSummary.draft || 0,
+        },
       ];
 
       setTabs(statusArray);
@@ -54,8 +65,24 @@ const BlogPost = () => {
       setIsLoading(false);
     }
   };
-  const deletePost = async (postId) => {};
-  const handleLoadMore = async () => {};
+  const deletePost = async (postId) => {
+    try {
+      await axiosInstance.delete(API_PATHS.POSTS.DELETE(postId));
+      setOpenDeleteAlert({
+        open: false,
+        data: null,
+      });
+      toast.success("Blog başarıyla silindi");
+      getAllPosts(1);
+    } catch (error) {
+      console.error(`Blog'u silerken bir hata oluştu: ${error}`);
+    }
+  };
+  const handleLoadMore = async () => {
+    if (page < totalPages) {
+      getAllPosts(page + 1);
+    }
+  };
 
   useEffect(() => {
     getAllPosts(1);
@@ -69,7 +96,7 @@ const BlogPost = () => {
           <h2 className="text-2xl font-semibold mt-5 mb-5">Bloglar</h2>
           <button
             className="btn-small"
-            onClick={() => navigate("admin/create")}
+            onClick={() => navigate("/admin/create")}
           >
             <LuPlus className="text-[18px]" /> Blog Oluştur
           </button>
@@ -99,8 +126,38 @@ const BlogPost = () => {
               }
             />
           ))}
+          {page < totalPages && (
+            <div className="flex items-center justify-center mb-8">
+              <button
+                className="flex items-center gap-3 text-sm text-white font-medium bg-black px-7 py-2.5 rounded-full text-nowrap hover:scale-105 transition-all cursor-pointer"
+                disabled={isLoading}
+                onClick={handleLoadMore}
+              >
+                {isLoading ? (
+                  <LuLoaderCircle className="animate-spin text-[15px]" />
+                ) : (
+                  <LuGalleryVerticalEnd className="text-lg" />
+                )}
+                {isLoading ? "Yükleniyor..." : "Daha fazla yükle"}
+              </button>
+            </div>
+          )}
         </div>
       </div>
+      <Modal
+        isOpen={openDeleteAlert?.open}
+        onClose={() => {
+          setOpenDeleteAlert({ open: false, data: null });
+        }}
+        title="Silme İşlemi"
+      >
+        <div className="w-[60vw] md:w-[40vw]">
+          <DeleteAlertContent
+            content="Bu Blog'u silmek istediğinize emin misiniz?"
+            onDelete={() => deletePost(openDeleteAlert.data)}
+          />
+        </div>
+      </Modal>
     </DashboardLayout>
   );
 };
