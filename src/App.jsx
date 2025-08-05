@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ToastBar, Toaster } from "react-hot-toast";
 import BlogLandingPage from "./pages/Client/BlogLandingPage";
 import BlogPostView from "./pages/Client/BlogPostView";
 import PostByTags from "./pages/Client/PostByTags";
@@ -38,14 +37,6 @@ const App = () => {
             <Route path="/admin-login" element={<AdminLogin />} />
           </Routes>
         </Router>
-        <Toaster
-          toastOptions={{
-            className: "",
-            style: {
-              fontSize: "13px",
-            },
-          }}
-        />
       </div>
     </UserProvider>
   );
