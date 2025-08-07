@@ -44,7 +44,7 @@ const TagInput = ({ tags, setTags }) => {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Etiket ekle ve enter'a bas"
+        placeholder="Listeye ekle"
         className="flex-1 outline-none text-sm p-1 border-none min-w-[120px]"
       />
     </div>

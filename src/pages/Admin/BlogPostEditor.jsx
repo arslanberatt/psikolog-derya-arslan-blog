@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import MDEditor, { commands } from "@uiw/react-md-editor";
-import {
-  LuLoaderCircle,
-  LuSave,
-  LuSend,
-  LuSparkles,
-  LuTrash2,
-} from "react-icons/lu";
+import { LuLoaderCircle, LuSave, LuSend, LuTrash2 } from "react-icons/lu";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import uploadImage from "../../utils/uploadImage";
@@ -246,7 +240,7 @@ const BlogPostEditor = ({ isEdit }) => {
             </div>
 
             <div className="mt-3">
-              <label className="text-xs font-medium tex-slate-600">
+              <label className="text-xs font-medium text-slate-600">
                 Etiketler
               </label>
               <TagInput
@@ -268,7 +262,7 @@ const BlogPostEditor = ({ isEdit }) => {
       >
         <div className="w-[60vw] md:w-[40vw]">
           <DeleteAlertContent
-            content="Bu Blog'u silmek istediğinize emin misiniz?"
+            content="Bu yazıyı silmek istediğinize emin misiniz?"
             onDelete={() => deletePost()}
           />
         </div>
