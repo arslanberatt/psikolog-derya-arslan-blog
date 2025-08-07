@@ -11,6 +11,8 @@ import BlogPostEditor from "./pages/Admin/BlogPostEditor";
 import Comments from "./pages/Admin/Comments";
 import Dashboard from "./pages/Admin/Dashboard";
 import UserProvider from "./context/userContext";
+import AboutEditor from "./pages/Admin/AboutEditor";
+import ServiceList from "./pages/Admin/ServiceList";
 
 const App = () => {
   return (
@@ -26,6 +28,8 @@ const App = () => {
             <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
               <Route path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/admin/posts" element={<BlogPosts />} />
+              <Route path="/admin/service" element={<ServiceList />} />
+              <Route path="/admin/about" element={<AboutEditor />} />
               <Route path="/admin/create" element={<BlogPostEditor />} />
               <Route
                 path="/admin/edit/:postSlug"

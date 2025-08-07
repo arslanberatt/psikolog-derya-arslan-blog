@@ -45,7 +45,6 @@ const Dashboard = () => {
     getDashboardData();
     return () => {};
   }, []);
-  console.log(dashboardData?.recentComments);
 
   return (
     <DashboardLayout activeMenu="Yönetim Paneli">

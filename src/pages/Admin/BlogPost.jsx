@@ -153,7 +153,7 @@ const BlogPost = () => {
       >
         <div className="w-[60vw] md:w-[40vw]">
           <DeleteAlertContent
-            content="Bu Blog'u silmek istediğinize emin misiniz?"
+            content="Bu yazıyı silmek istediğinize emin misiniz?"
             onDelete={() => deletePost(openDeleteAlert.data)}
           />
         </div>

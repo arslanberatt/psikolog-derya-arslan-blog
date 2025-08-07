@@ -4,7 +4,6 @@ import { LuDot } from "react-icons/lu";
 import CharAvatar from "./CharAvatar";
 
 const RecentCommentsList = ({ comments }) => {
-  console.log(comments);
   return (
     <div className="mt-4">
       <ul className="space-y-4">
