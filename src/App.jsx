@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import BlogLandingPage from "./pages/Client/BlogLandingPage";
+import BlogPage from "./pages/Client/BlogPage";
 import BlogPostView from "./pages/Client/BlogPostView";
 import PostByTags from "./pages/Client/PostByTags";
 import SearchPosts from "./pages/Client/SearchPosts";
@@ -13,6 +13,8 @@ import Dashboard from "./pages/Admin/Dashboard";
 import UserProvider from "./context/userContext";
 import AboutEditor from "./pages/Admin/AboutEditor";
 import ServiceList from "./pages/Admin/ServiceList";
+import ExperienceList from "./pages/Admin/ExperienceList";
+import ClientLandingPage from "./pages/Client/ClientLandingPage";
 
 const App = () => {
   return (
@@ -20,7 +22,8 @@ const App = () => {
       <div>
         <Router>
           <Routes>
-            <Route path="/" element={<BlogLandingPage />} />
+            <Route path="/" element={<ClientLandingPage />} />
+            <Route path="/bloglar" element={<BlogPage />} />
             <Route path="/:slug" element={<BlogPostView />} />
             <Route path="/tag/:tagName" element={<PostByTags />} />
             <Route path="/search" element={<SearchPosts />} />
@@ -29,6 +32,7 @@ const App = () => {
               <Route path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/admin/posts" element={<BlogPosts />} />
               <Route path="/admin/service" element={<ServiceList />} />
+              <Route path="/admin/experience" element={<ExperienceList />} />
               <Route path="/admin/about" element={<AboutEditor />} />
               <Route path="/admin/create" element={<BlogPostEditor />} />
               <Route

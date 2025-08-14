@@ -16,7 +16,7 @@ const CommentReplyInput = ({
     <div className="mt-5 ml-10 relative">
       <div className="flex items-start gap-3">
         <CharAvatar
-          fullName={user.profileImageUrl || ""}
+          fullName={authorName || ""}
           width="w-10"
           height="h-10"
           style="rounded-full object-cover"

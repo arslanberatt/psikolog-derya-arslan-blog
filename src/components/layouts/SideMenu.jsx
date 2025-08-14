@@ -20,7 +20,7 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
 
   const handleLogout = () => {
     localStorage.clear();
-    setUser(null)
+    setUser(null);
     setOpenSideMenu((prevState) => !prevState);
     navigate("/");
   };
@@ -50,7 +50,7 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
           key={`menu_${index}`}
           className={`w-full flex items-center gap-4 text-[15px] ${
             activeMenu == item.label
-              ? "text-white bg-gradient-to-r from-sky-500 to-cyan-400"
+              ? "text-white bg-gradient-to-r from-sky-500 to-red-400"
               : ""
           } py-3 px-6 rounded-lg mb-3 cursor-pointer`}
           onClick={() => handleClick(item.path)}

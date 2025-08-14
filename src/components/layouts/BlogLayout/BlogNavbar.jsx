@@ -10,6 +10,7 @@ import ProfileInfoCard from "../../Cards/ProfileInfoCard";
 import Login from "../../Auth/Login";
 import Signup from "../../Auth/Signup";
 import Modal from "../../Modal";
+import SearchBarPopup from "../../../pages/Client/components/SearchBarPopup";
 
 const BlogNavbar = ({ activeMenu }) => {
   const { user, setOpenAuthForm } = useContext(UserContext);
@@ -43,9 +44,9 @@ const BlogNavbar = ({ activeMenu }) => {
                   <li className="text-[15px] text-black font-medium list-none relative group cursor-pointer:">
                     {item.label}
                     <span
-                      className={`absolute inset-x-0 bottom-0 h-[2px] bg-sky-500 transition-all duration-300 origin-left ${
-                        index == 0 ? "scale-x-100" : "scale-x-0"
-                      } group-hover:scale-x-100`}
+                      className={`absolute inset-x-0 bottom-0 h-[2px] ${
+                        activeMenu == item.label ? "scale-x-100" : "scale-x-0"
+                      }  bg-sky-500 transition-all duration-500 origin-left group-hover:scale-x-100`}
                     ></span>
                   </li>
                 </Link>
@@ -85,6 +86,7 @@ const BlogNavbar = ({ activeMenu }) => {
         </div>
       </div>
       <AuthModel />
+      <SearchBarPopup isOpen={openSearchBar} setIsOpen={setOpenSearchBar} />
     </>
   );
 };
