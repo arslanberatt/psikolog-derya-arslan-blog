@@ -12,6 +12,7 @@ import SharePost from "./components/SharePost";
 import { sanitizeMarkdown } from "../../utils/helper";
 import CommentReplyInput from "../../components/Inputs/CommentReplyInput";
 import CommentInfoCard from "./components/CommentInfoCard";
+import LikeCommentButton from "./components/LikeCommentButton";
 
 const BlogPostView = () => {
   const { slug } = useParams();
@@ -194,10 +195,14 @@ const BlogPostView = () => {
                   ))}
               </div>
             </div>
-
             <div className="col-span-12 md:col-span-4">
               <TrendingPostsList />
             </div>
+            <LikeCommentButton
+              postId={blogPostData._id || ""}
+              likes={blogPostData.likes || 0}
+              comments={blogPostData.length || 0}
+            />
           </div>
         </>
       )}

@@ -9,13 +9,15 @@ import Modal from "../../components/Modal";
 import { toast } from "react-toastify";
 import Input from "../../components/Inputs/Input";
 
-const ServiceList = () => {
-  const [serviceList, setServiceList] = useState([]);
+const ExperienceList = () => {
+  const [experienceList, setExperienceList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [serviceData, setServiceData] = useState({
+  const [experienceData, setExperienceData] = useState({
     id: "",
+    year: "",
     title: "",
+    institution: "",
     description: "",
   });
 
@@ -32,12 +34,12 @@ const ServiceList = () => {
     data: null,
   });
 
-  const getAllServices = async (pageNumber = 1) => {
+  const getAllExperiences = async (pageNumber = 1) => {
     try {
       setIsLoading(true);
-      const response = await axiosInstance.get(API_PATHS.SERVICE.GET_ALL);
+      const response = await axiosInstance.get(API_PATHS.EXPERIENCE.GET_ALL);
       const data = response.data;
-      setServiceList(data);
+      setExperienceList(data);
     } catch (error) {
       console.error(`Verileri çekerken hata oluştu: ${error}`);
     } finally {
@@ -48,24 +50,40 @@ const ServiceList = () => {
   const editable = async () => {
     if (openUpdateAlert.open) {
       if (openUpdateAlert.data) {
-        setServiceData({
+        setExperienceData({
           id: openUpdateAlert.data._id,
+          year: openUpdateAlert.data.year,
           title: openUpdateAlert.data.title,
+          institution: openUpdateAlert.data.institution,
           description: openUpdateAlert.data.description,
         });
       } else {
-        setServiceData({ id: "", title: "", description: "" });
+        setExperienceData({
+          id: "",
+          year: "",
+          title: "",
+          institution: "",
+          description: "",
+        });
       }
       setError("");
     }
   };
 
   const handlePublish = async () => {
-    if (!serviceData.title.trim()) {
+    if (!experienceData.year.trim()) {
+      setError("Lütfen bir yıl giriniz giriniz.");
+      return;
+    }
+    if (!experienceData.title.trim()) {
       setError("Lütfen bir başlık giriniz.");
       return;
     }
-    if (!serviceData.description.trim()) {
+    if (!experienceData.institution.trim()) {
+      setError("Lütfen bir kurum ismi giriniz.");
+      return;
+    }
+    if (!experienceData.description.trim()) {
       setError("Lütfen bir açıklama giriniz.");
       return;
     }
@@ -73,80 +91,95 @@ const ServiceList = () => {
     setError("");
     try {
       const reqPayload = {
-        title: serviceData.title,
-        description: serviceData.description,
+        year: experienceData.year,
+        title: experienceData.title,
+        institution: experienceData.institution,
+        description: experienceData.description,
       };
 
-      if (serviceData.id) {
+      if (experienceData.id) {
         await axiosInstance.put(
-          API_PATHS.SERVICE.UPDATE(serviceData.id),
+          API_PATHS.SERVICE.UPDATE(experienceData.id),
           reqPayload
         );
-        toast.success("Hizmet başarıyla güncellendi.");
+        toast.success("Deneyim başarıyla güncellendi.");
       } else {
         await axiosInstance.post(API_PATHS.SERVICE.CREATE, reqPayload);
-        toast.success("Hizmet başarıyla oluşturuldu.");
+        toast.success("Deneyim başarıyla oluşturuldu.");
       }
 
       setOpenUpdateAlert({ open: false, data: null });
-      getAllServices();
+      getAllExperiences();
     } catch (error) {
-      setError("Hizmet kaydedilirken bir hata oluştu.");
+      setError("Deneyim kaydedilirken bir hata oluştu.");
       console.error("Hata detayı:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const deleteService = async (serviceId) => {
+  const deleteExperience = async (experienceId) => {
     try {
-      await axiosInstance.delete(API_PATHS.SERVICE.DELETE(serviceId));
+      await axiosInstance.delete(API_PATHS.SERVICE.DELETE(experienceId));
       setOpenDeleteAlert({
         open: false,
         data: null,
       });
-      toast.success("Hizmet başarıyla silindi");
-      getAllServices();
+      toast.success("Deneyim başarıyla silindi");
+      getAllExperiences();
     } catch (error) {
-      console.error(`Hizmeti silerken bir hata oluştu: ${error}`);
+      console.error(`Deneyimi silerken bir hata oluştu: ${error}`);
     }
   };
 
   useEffect(() => {
-    getAllServices();
+    getAllExperiences();
     editable();
     return () => {};
   }, [openUpdateAlert]);
 
   return (
-    <DashboardLayout activeMenu="Hizmetler">
+    <DashboardLayout activeMenu="Deneyimler">
       <div className="w-auto sm:max-w-[900px] mx-auto">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold mt-5 mb-5">Hizmetler</h2>
+          <h2 className="text-2xl font-semibold mt-5 mb-5">Deneyimler</h2>
           <button
             className="btn-small"
             onClick={() => setOpenUpdateAlert({ open: true, data: null })}
           >
-            <LuPlus className="text-[18px]" /> Hizmet Oluştur
+            <LuPlus className="text-[18px]" /> Deneyim Oluştur
           </button>
         </div>
         <div className="mt-5">
-          {serviceList.map((service) => (
+          {experienceList.map((experience) => (
             <div
-              key={service._id}
+              key={experience._id}
               className="flex items-center gap-4 bg-white p-3 mb-5 rounded-lg cursor-pointer group"
-              onClick={() => setOpenUpdateAlert({ open: true, data: service })}
+              onClick={() =>
+                setOpenUpdateAlert({ open: true, data: experience })
+              }
             >
               <div className="flex-1">
                 <h3 className="text-[13px] md:text-[15px] text-black font-medium">
-                  {service.title}
+                  {experience.title}{" "}
+                  <span className="text-[11px] text-gray-700 font-medium bg-gray-100 px-2.5 py-1 rounded">
+                    {experience.year}
+                  </span>
                 </h3>
+                <div className="flex items-center gap-2.5 mt-2 flex-wrap">
+                  <div className="text-[11px] text-gray-700 font-medium bg-gray-100 px-2.5 py-1 rounded">
+                    Kurum:
+                  </div>
+                  <div className="flex text-[11px] items-center gap-2.5">
+                    {experience.institution}
+                  </div>
+                </div>
                 <div className="flex items-center gap-2.5 mt-2 flex-wrap">
                   <div className="text-[11px] text-gray-700 font-medium bg-gray-100 px-2.5 py-1 rounded">
                     Açıklama:
                   </div>
                   <div className="flex text-[11px] items-center gap-2.5">
-                    {service.description}
+                    {experience.description}
                   </div>
                 </div>
               </div>
@@ -154,7 +187,7 @@ const ServiceList = () => {
                 className="hidden md:flex items-center gap-2 text-xs text-rose-500 font-medium bg-rose-50 px-3 py-1 rounded text-nowrap border border-rose-100 hover:border-rose-200 cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation(); // Üst div'e yayılmayı engelle
-                  setOpenDeleteAlert({ open: true, data: service._id });
+                  setOpenDeleteAlert({ open: true, data: experience._id });
                 }}
               >
                 <LuTrash2 /> <span className="hidden md:block">Sil</span>
@@ -173,7 +206,7 @@ const ServiceList = () => {
         <div className="w-[60vw] md:w-[40vw]">
           <DeleteAlertContent
             content="Bu yazıyı silmek istediğinize emin misiniz?"
-            onDelete={() => deleteService(openDeleteAlert.data)}
+            onDelete={() => deleteExperience(openDeleteAlert.data)}
           />
         </div>
       </Modal>
@@ -182,31 +215,53 @@ const ServiceList = () => {
         onClose={() => {
           setOpenUpdateAlert({ open: false, data: null });
         }}
-        title={serviceData.id ? "Hizmeti Güncelle" : "Hizmet Ekle"}
+        title={experienceData.id ? "Deneyimi Güncelle" : "Deneyim Ekle"}
       >
         <div className="w-[60vw] md:w-[40vw]">
           <div className="p-5">
             <p className="text-[14px]">
               <Input
-                label="Hizmet Başlığı"
-                value={serviceData.title}
+                label="Deneyim Yılı"
+                value={experienceData.year}
                 onChange={(e) =>
-                  setServiceData((prev) => ({
+                  setExperienceData((prev) => ({
+                    ...prev,
+                    year: e.target.value,
+                  }))
+                }
+                placeholder="2022 - 2025"
+              />
+              <Input
+                label="Deneyim Başlığı"
+                value={experienceData.title}
+                onChange={(e) =>
+                  setExperienceData((prev) => ({
                     ...prev,
                     title: e.target.value,
                   }))
                 }
                 placeholder="Başlık"
               />
+              <Input
+                label="Kurum İsmi"
+                value={experienceData.institution}
+                onChange={(e) =>
+                  setExperienceData((prev) => ({
+                    ...prev,
+                    institution: e.target.value,
+                  }))
+                }
+                placeholder="Kurum"
+              />
               <label className="text-[13px] text-slate-800">
-                Hizmet Açıklaması
+                Deneyim Açıklaması
               </label>
               <textarea
                 placeholder="Açıklama"
                 className="form-input h-22 my-3"
-                value={serviceData.description}
+                value={experienceData.description}
                 onChange={(e) =>
-                  setServiceData((prev) => ({
+                  setExperienceData((prev) => ({
                     ...prev,
                     description: e.target.value,
                   }))
@@ -221,7 +276,7 @@ const ServiceList = () => {
               >
                 {loading
                   ? "Kaydediliyor..."
-                  : serviceData.id
+                  : experienceData.id
                   ? "Güncelle"
                   : "Oluştur"}
               </button>
@@ -233,4 +288,4 @@ const ServiceList = () => {
   );
 };
 
-export default ServiceList;
+export default ExperienceList;

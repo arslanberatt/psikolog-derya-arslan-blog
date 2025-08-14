@@ -10,7 +10,7 @@ import moment from "moment";
 import BlogPostSummaryCard from "./components/BlogPostSummaryCard";
 import TrendingPostsList from "./components/TrendingPostsList";
 
-const BlogLandingPage = () => {
+const BlogPage = () => {
   const navigate = useNavigate();
 
   const [blogPostList, setBlogPostList] = useState([]);
@@ -55,8 +55,8 @@ const BlogLandingPage = () => {
   };
 
   return (
-    <BlogLayout>
-      <div className="grid grid-cols-12 gap-5">
+    <BlogLayout activeMenu="Bloglar">
+      <div className="grid grid-cols-12 gap-5 md:px-4">
         <div className="col-span-12 md:col-span-9">
           {blogPostList.length > 0 && (
             <FeaturedBlogPost
@@ -119,4 +119,4 @@ const BlogLandingPage = () => {
   );
 };
 
-export default BlogLandingPage;
+export default BlogPage;

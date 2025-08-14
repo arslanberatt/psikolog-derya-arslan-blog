@@ -1,5 +1,7 @@
 import React from "react";
 import CharAvatar from "../../../components/Cards/CharAvatar";
+import MarkdownContent from "./MarkdownContent";
+import { sanitizeMarkdown } from "../../../utils/helper";
 
 const BlogPostSummaryCard = ({
   title,
@@ -12,19 +14,21 @@ const BlogPostSummaryCard = ({
 }) => {
   return (
     <div
-      className="bg-white shadow-lg shadow-gray-100 rounded-xl overflow-hidden cursor-pointer"
+      className="bg-white shadow-gray-100 rounded-md overflow-hidden cursor-pointer"
       onClick={onClick}
     >
       <img
         src={coverImageUrl}
         alt={title}
-        className="w-full h-64 object-cover"
+        className="w-full lg:h-64 h-72 object-cover border border-gray-100 rounded-lg"
       />
-      <div className="p-4 md:p-6">
-        <h2 className="text-lg md:text-2xl font-bold mb-2 line-clamp-3">
+      <div className="py-2 md:py-3 px-2">
+        <h2 className="text-lg md:text-xl font-bold mb-2 line-clamp-3">
           {title}
         </h2>
-        <p className="text-gray-700 text-[13px] mb-4 line-clamp-3">{content}</p>
+        <p className="text-gray-700 text-[13px] mb-4 line-clamp-3">
+          <MarkdownContent content={sanitizeMarkdown(content || "")} />
+        </p>
         <div className="flex items-center flex-wrap gap-2 mb-4">
           {tags.slice(0, 3).map((tag, index) => (
             <span

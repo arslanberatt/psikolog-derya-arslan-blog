@@ -1,5 +1,7 @@
 import React from "react";
 import CharAvatar from "../../../components/Cards/CharAvatar";
+import { sanitizeMarkdown } from "../../../utils/helper";
+import MarkdownContent from "./MarkdownContent";
 const FeaturedBlogPost = ({
   title,
   coverImageUrl,
@@ -11,7 +13,7 @@ const FeaturedBlogPost = ({
 }) => {
   return (
     <div
-      className="grid grid-cols-12 bg-white shadow-lg shadow-gray-100 rounded-xl overflow-hidden cursor-pointer"
+      className="grid grid-cols-12 bg-white rounded-md shadow-gray-100 overflow-hidden cursor-pointer"
       onClick={onClick}
     >
       <div className="col-span-6">
@@ -27,7 +29,7 @@ const FeaturedBlogPost = ({
             {title}
           </h2>
           <p className="text-gray-700 text-[13px] mb-4 line-clamp-3">
-            {content}
+            <MarkdownContent content={sanitizeMarkdown(content || "")} />
           </p>
           <div className="flex items-center flex-wrap gap-2 mb-4">
             {tags.slice(0, 3).map((tag, index) => (

@@ -131,7 +131,7 @@ const CommentInfoCard = ({
               replies={child.replies || []}
               getAllComments={getAllComments}
               onDelete={() => onDelete(child._id)}
-              isSubReply // <- çocuklar için true
+              isSubReply
             />
           </div>
         ))}
