@@ -1,8 +1,7 @@
-// StoriesGrid.jsx
-
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { API_PATHS } from "../../../utils/apiPaths";
+import ServiceCardSkeleton from "./skeletons/ServiceCardSkeleton";
 
 export default function StoriesGrid() {
   const [serviceList, setServiceList] = useState([]);
@@ -34,19 +33,26 @@ export default function StoriesGrid() {
         </div>
       </div>
 
-      {/* 3 kolon grid; ortada büyük "featured" kart */}
       <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
-        {serviceList.map((service) => (
-          <Card item={service} />
-        ))}
+        {isLoading ? (
+          <>
+            {Array.from({ length: 6 }).map((_, i) => (
+              <ServiceCardSkeleton key={i} />
+            ))}
+          </>
+        ) : (
+          serviceList
+            .slice(0, 6)
+            .map((service, i) => <Card key={i} item={service} index={i} />)
+        )}
       </div>
     </section>
   );
 }
 
-const Card = ({ item }) => {
+const Card = ({ item, index }) => {
   return (
-    <article className="rounded-md bg-gray-50 p-5 transition duration-300 hover:bg-black/10 ">
+    <div className="rounded-md bg-gray-50 p-5 transition duration-300 hover:bg-black/10 ">
       <div className="mb-4 inline-flex h-8 w-8 items-center justify-center rounded-md border border-black/10">
         <span className="text-sm">✳︎</span>
       </div>
@@ -54,6 +60,6 @@ const Card = ({ item }) => {
         {item.title}
       </h3>
       <p className="mt-2 text-sm leading-6 text-black/60">{item.description}</p>
-    </article>
+    </div>
   );
 };

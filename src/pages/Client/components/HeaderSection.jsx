@@ -1,33 +1,70 @@
-import ME from "../../../assets/psikologderyaarslan.jpeg";
+import { useEffect, useState } from "react";
+import axiosInstance from "../../../utils/axiosInstance";
+import { API_PATHS } from "../../../utils/apiPaths";
 
-const HeaderSection = () => {
+const HeaderSection = ({ link, text }) => {
+  const [about, setAbout] = useState(null); // <-- tek obje
+  const [isLoading, setIsLoading] = useState(true); // <-- ilk anda true
+
+  const getAbout = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axiosInstance.get(API_PATHS.ABOUT.GET);
+      const data = response.data;
+      const item = Array.isArray(data) ? data[0] : data;
+      setAbout(item ?? null);
+    } catch (err) {
+      console.error(`Verileri çekerken hata oluştu: ${err}`);
+      setAbout(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getAbout();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <>
+        <div className="mt-4 h-8 w-2/3 bg-neutral-200 rounded animate-pulse" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+          <div>
+            <div className="mt-2 space-y-3">
+              <div className="h-4 w-full bg-neutral-200 rounded animate-pulse" />
+              <div className="h-4 w-11/12 bg-neutral-200 rounded animate-pulse" />
+              <div className="h-4 w-10/12 bg-neutral-200 rounded animate-pulse" />
+              <div className="h-4 w-9/12 bg-neutral-200 rounded animate-pulse" />
+            </div>
+            <div className="mt-8 h-10 w-56 bg-neutral-300 rounded-lg animate-pulse" />
+          </div>
+          <div className="overflow-hidden rounded-2xl border border-neutral-200 shadow-sm">
+            <div className="aspect-[3/2] bg-neutral-200 animate-pulse" />
+          </div>
+        </div>
+      </>
+    );
+  }
   return (
     <>
-      <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-1 text-xs font-medium text-neutral-600 shadow-sm">
-        <span className="inline-block h-1.5 w-1.5 rounded-full bg-neutral-900" />
-        Hakkımda
+      <div className="mt-4 font-semibold tracking-tight text-neutral-900 text-2xl sm:text-3xl lg:text-4xl">
+        {about?.title}
       </div>
-      <h1 className="mt-4 font-semibold tracking-tight text-neutral-900 text-2xl sm:text-3xl lg:text-4xl">
-        Lorem ipsum dolor sit amet, consectetur adipisicing.
-      </h1>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-        <div className="">
+        <div>
           <p className="mt-4 text-base leading-relaxed text-neutral-600">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo
-            dignissimos aut fugiat facere veritatis provident tenetur esse odit,
-            a saepe excepturi ut optio eaque consectetur laudantium asperiores
-            blanditiis accusamus natus. Perferendis distinctio architecto
-            pariatur mollitia, eius aut! Aspernatur, nam id aliquam inventore
-            facere recusandae ullam, iste, sapiente itaque cum atque hic
-            deleniti adipisci rerum pariatur temporibus dignissimos! Dolores,
-            ullam deserunt!
+            {about?.shortBio ||
+              "Kısa bir biyografi yakında eklenecektir. Güncel bilgileri burada bulacaksınız."}
           </p>
+
           <div className="mt-8">
             <a
-              href="/"
+              href={link}
               className="inline-flex items-center gap-2 rounded-lg border border-neutral-900 bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900/20"
             >
-              Hakkımda daha fazlası için
+              {text}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-4 w-4"
@@ -45,12 +82,13 @@ const HeaderSection = () => {
             </a>
           </div>
         </div>
+
         <div className="overflow-hidden rounded-2xl border border-neutral-200 shadow-sm">
           <div className="relative">
             <img
-              src={ME}
-              alt="Psikolog Derya Arslan"
-              className="lg:aspect-3/2 aspect-3/3 object-cover"
+              src={about?.profileImageUrl}
+              alt={about?.title || "Profil fotoğrafı"}
+              className="aspect-[3/2] md:aspect-[4/3] w-full object-cover"
               loading="lazy"
             />
           </div>

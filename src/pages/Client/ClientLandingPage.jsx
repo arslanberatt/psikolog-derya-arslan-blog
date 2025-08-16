@@ -7,6 +7,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import moment from "moment";
 import StoriesGrid from "./components/StoriesGrid";
+import SummaryCardSkeleton from "./components/skeletons/SummaryCardSkeleton";
 
 const ClientLandingPage = () => {
   const navigate = useNavigate();
@@ -44,8 +45,11 @@ const ClientLandingPage = () => {
   return (
     <BlogLayout activeMenu="Anasayfa">
       <div className="grid grid-cols-12 gap-5 md:px-4">
-        <div className="col-span-12  ">
-          <HeaderSection />
+        <div className="col-span-12 ">
+          <HeaderSection
+            link={"/hakkimda"}
+            text={"Hakkımda daha fazlası için"}
+          />
           <StoriesGrid />
           <div className="container">
             <div className="relative my-12">
@@ -55,7 +59,14 @@ const ClientLandingPage = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 ">
-            {blogPostList.length > 0 &&
+            {isLoading ? (
+              <>
+                <SummaryCardSkeleton />
+                <SummaryCardSkeleton />
+                <SummaryCardSkeleton />
+              </>
+            ) : (
+              blogPostList.length > 0 &&
               blogPostList.map((item) => (
                 <BlogPostSummaryCard
                   key={item._id}
@@ -71,7 +82,8 @@ const ClientLandingPage = () => {
                   authorName={item.author.name}
                   onClick={() => handleClick(item)}
                 />
-              ))}
+              ))
+            )}
           </div>
         </div>
       </div>

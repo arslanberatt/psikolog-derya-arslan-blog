@@ -24,3 +24,5 @@ src/utils
 *.njsproj
 *.sln
 *.sw?
+
+.env
