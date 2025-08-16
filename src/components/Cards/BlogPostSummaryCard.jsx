@@ -40,7 +40,7 @@ const BlogPostSummaryCard = ({
             </span>
           </div>
           <div className="h-6 w-[1px] bg-gray-300/70" />
-          <div className="flex items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-2.5">
             {tags.map((tag, index) => (
               <div
                 key={`tag_${index}`}

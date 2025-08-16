@@ -15,6 +15,7 @@ import AboutEditor from "./pages/Admin/AboutEditor";
 import ServiceList from "./pages/Admin/ServiceList";
 import ExperienceList from "./pages/Admin/ExperienceList";
 import ClientLandingPage from "./pages/Client/ClientLandingPage";
+import { AboutPage } from "./pages/Client/AboutPage";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<ClientLandingPage />} />
             <Route path="/bloglar" element={<BlogPage />} />
+            <Route path="/hakkimda" element={<AboutPage />} />
             <Route path="/:slug" element={<BlogPostView />} />
             <Route path="/tag/:tagName" element={<PostByTags />} />
             <Route path="/search" element={<SearchPosts />} />
@@ -33,7 +35,7 @@ const App = () => {
               <Route path="/admin/posts" element={<BlogPosts />} />
               <Route path="/admin/service" element={<ServiceList />} />
               <Route path="/admin/experience" element={<ExperienceList />} />
-              <Route path="/admin/about" element={<AboutEditor />} />
+              <Route path="/admin/hakkimda" element={<AboutEditor />} />
               <Route path="/admin/create" element={<BlogPostEditor />} />
               <Route
                 path="/admin/edit/:postSlug"

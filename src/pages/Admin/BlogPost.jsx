@@ -48,12 +48,12 @@ const BlogPost = () => {
         { label: "all", title: "Tümü", count: statusSummary.all || 0 },
         {
           label: "published",
-          title: "Yayınlananlar",
+          title: "Yayınlanan",
           count: statusSummary.published || 0,
         },
         {
           label: "draft",
-          title: "Yayınlanmayanlar",
+          title: "Yayınlanmayan",
           count: statusSummary.draft || 0,
         },
       ];
@@ -91,7 +91,7 @@ const BlogPost = () => {
 
   return (
     <DashboardLayout activeMenu="Bloglar">
-      <div className="w-auto sm:max-w-[900px] mx-auto">
+      <div className="w-full">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-semibold mt-5 mb-5">Bloglar</h2>
           <button

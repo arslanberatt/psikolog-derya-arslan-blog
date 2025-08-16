@@ -1,4 +1,5 @@
 import React from "react";
+import ContactForm from "../../../pages/Client/components/ContactForm";
 
 // Simple brand mark (triangle) to echo the screenshot vibe
 function BrandMark() {
@@ -145,10 +146,7 @@ export default function BlogFooter() {
                 Klinik Psikolog Derya Arslan
               </span>
             </div>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-grey-100/90">
-              Empowering physicians with advanced multi‑modal tools to improve
-              treatment selection and patient outcomes.
-            </p>
+            <ContactForm />
 
             <div className="mt-8 flex items-center gap-4">
               {social.map((s) => (

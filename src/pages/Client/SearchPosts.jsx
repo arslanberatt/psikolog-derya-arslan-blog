@@ -4,7 +4,6 @@ import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import BlogLayout from "../../components/layouts/BlogLayout/BlogLayout";
 import BlogPostSummaryCard from "./components/BlogPostSummaryCard";
-import TrendingPostsList from "./components/TrendingPostsList";
 import moment from "moment";
 
 const SearchPosts = () => {
