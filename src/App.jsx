@@ -35,7 +35,7 @@ const App = () => {
               <Route path="/admin/posts" element={<BlogPosts />} />
               <Route path="/admin/service" element={<ServiceList />} />
               <Route path="/admin/experience" element={<ExperienceList />} />
-              <Route path="/admin/hakkimda" element={<AboutEditor />} />
+              <Route path="/admin/about" element={<AboutEditor />} />
               <Route path="/admin/create" element={<BlogPostEditor />} />
               <Route
                 path="/admin/edit/:postSlug"
