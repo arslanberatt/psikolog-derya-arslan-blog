@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import LOGO from "../../assets/web-logo.png";
 import Login from "../../components/Auth/Login";
-import SignUp from "../../components/Auth/Signup";
+import SignUp from "../../components/Auth/SignUp";
 
 const AdminLogin = () => {
   const [currentPage, setCurrentPage] = useState("login");
