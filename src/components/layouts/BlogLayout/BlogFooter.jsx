@@ -110,7 +110,7 @@ export default function BlogFooter() {
   }, []);
 
   return (
-    <footer className="relative w-full bg-black text-white">
+    <footer id="footer" className="relative w-full bg-black text-white">
       <svg
         className="pointer-events-none absolute inset-0 h-full w-full opacity-40"
         aria-hidden

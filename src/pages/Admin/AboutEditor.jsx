@@ -42,11 +42,6 @@ const AboutEditor = () => {
       setError("Lütfen bir uzun bir açıklama giriniz.");
       return;
     }
-    if (!aboutData.profileImageUrl) {
-      setError("Lütfen bir hakkımda fotoğrafı seçiniz.");
-      return;
-    }
-
     if (!aboutData.profileImageUrl && !aboutData.profilePreview) {
       setError("Lütfen bir hakkımda fotoğrafı seçiniz.");
       return;

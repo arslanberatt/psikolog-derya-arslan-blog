@@ -6,7 +6,7 @@ import {
   LuTag,
   LuContactRound,
   LuBook,
-  LuWorkflow,
+  LuPhone,
 } from "react-icons/lu";
 
 export const SIDE_MENU_DATA = [
@@ -33,12 +33,6 @@ export const SIDE_MENU_DATA = [
     label: "Hizmetler",
     icon: LuBook,
     path: "/admin/service",
-  },
-  {
-    id: "05",
-    label: "Deneyimler",
-    icon: LuWorkflow,
-    path: "/admin/experience",
   },
   {
     id: "06",

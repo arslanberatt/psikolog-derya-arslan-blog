@@ -13,7 +13,6 @@ import Dashboard from "./pages/Admin/Dashboard";
 import UserProvider from "./context/userContext";
 import AboutEditor from "./pages/Admin/AboutEditor";
 import ServiceList from "./pages/Admin/ServiceList";
-import ExperienceList from "./pages/Admin/ExperienceList";
 import ClientLandingPage from "./pages/Client/ClientLandingPage";
 import { AboutPage } from "./pages/Client/AboutPage";
 import NotFound from "./pages/Client/NotFound";
@@ -35,7 +34,6 @@ const App = () => {
               <Route path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/admin/posts" element={<BlogPosts />} />
               <Route path="/admin/service" element={<ServiceList />} />
-              <Route path="/admin/experience" element={<ExperienceList />} />
               <Route path="/admin/about" element={<AboutEditor />} />
               <Route path="/admin/create" element={<BlogPostEditor />} />
               <Route
