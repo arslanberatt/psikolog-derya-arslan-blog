@@ -83,27 +83,36 @@ const BlogPostView = () => {
   useEffect(() => {
     if (slug) {
       fetchPostDetailBySlug();
-      document.title = `${
-        blogPostData?.title || "Blog Yazısı"
-      } | Klinik Psikolog Derya Arslan`;
-
-      const metaDescription = document.querySelector(
-        "meta[name='description']"
-      );
-      const desc =
-        blogPostData?.content?.slice(0, 150) ||
-        "Psikolog Derya Arslan’ın blog yazısını keşfedin.";
-
-      if (metaDescription) {
-        metaDescription.setAttribute("content", desc);
-      } else {
-        const newMeta = document.createElement("meta");
-        newMeta.name = "description";
-        newMeta.content = desc;
-        document.head.appendChild(newMeta);
-      }
     }
-  }, [slug, blogPostData]);
+  }, [slug]);
+
+  // Görüntülenme artırmayı sadece slug değişince yap
+  useEffect(() => {
+    if (blogPostData?._id) {
+      incrementViews(blogPostData._id);
+    }
+  }, [blogPostData?._id]);
+  useEffect(() => {
+    if (!blogPostData) return;
+
+    document.title = `${
+      blogPostData.title || "Blog Yazısı"
+    } | Klinik Psikolog Derya Arslan`;
+
+    const metaDescription = document.querySelector("meta[name='description']");
+    const desc =
+      blogPostData.content?.slice(0, 150) ||
+      "Psikolog Derya Arslan’ın blog yazısını keşfedin.";
+
+    if (metaDescription) {
+      metaDescription.setAttribute("content", desc);
+    } else {
+      const newMeta = document.createElement("meta");
+      newMeta.name = "description";
+      newMeta.content = desc;
+      document.head.appendChild(newMeta);
+    }
+  }, [blogPostData]);
 
   return (
     <BlogLayout>
