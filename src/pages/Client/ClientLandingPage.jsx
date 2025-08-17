@@ -8,6 +8,7 @@ import { API_PATHS } from "../../utils/apiPaths";
 import moment from "moment";
 import StoriesGrid from "./components/StoriesGrid";
 import SummaryCardSkeleton from "./components/skeletons/SummaryCardSkeleton";
+import { Helmet } from "react-helmet-async";
 
 const ClientLandingPage = () => {
   const navigate = useNavigate();
@@ -39,11 +40,15 @@ const ClientLandingPage = () => {
   }, []);
 
   const handleClick = (post) => {
-    navigate(`/${post.slug}`);
+    navigate(`/blog/${post.slug}`);
   };
 
   return (
     <BlogLayout activeMenu="Anasayfa">
+      <Helmet>
+        <title>Anasayfa | Psikolog Derya Arslan</title>
+        <meta name="description" content="Psikolog Derya Arslan Anasayfası" />
+      </Helmet>
       <div className="grid grid-cols-12 gap-5 md:px-4">
         <div className="col-span-12 ">
           <HeaderSection

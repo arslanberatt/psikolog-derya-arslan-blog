@@ -5,6 +5,7 @@ import { API_PATHS } from "../../utils/apiPaths";
 import BlogLayout from "../../components/layouts/BlogLayout/BlogLayout";
 import BlogPostSummaryCard from "./components/BlogPostSummaryCard";
 import moment from "moment";
+import { Helmet } from "react-helmet-async";
 
 const SearchPosts = () => {
   const navigate = useNavigate();
@@ -37,7 +38,11 @@ const SearchPosts = () => {
 
   return (
     <BlogLayout>
-      <div>
+      <div className="h-screen">
+        <Helmet>
+          <title>{query} | Psikolog Derya Arslan</title>
+          <meta name="description" content="Psikolog Derya Arslan Arama" />
+        </Helmet>
         <h3 className="text-lg font-medium">
           "<span className="font-semibold">{query}" </span>
           aramasına özel sonuçlar

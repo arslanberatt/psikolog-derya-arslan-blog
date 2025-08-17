@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ContactForm from "../../../pages/Client/components/ContactForm";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../../utils/axiosInstance";
+import { API_PATHS } from "../../../utils/apiPaths";
 
 // Simple brand mark (triangle) to echo the screenshot vibe
 function BrandMark() {
@@ -15,23 +18,19 @@ function BrandMark() {
     </svg>
   );
 }
-
 const social = [
   {
-    label: "X",
-    href: "#",
+    label: "Doktor Sitesi",
+    href: "https://www.doktorsitesi.com/klinik-psikolog-derya-arslan/psikoloji/istanbul",
     svg: (
       <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
-        <path
-          fill="currentColor"
-          d="M20 4h-2l-5 6.5L8 4H4l7 9-7 7h2l5-6.5L16 20h4l-7-9 7-7z"
-        />
+        <path fill="currentColor" d="M18 4h-2l-12 4H4l11 7h2l5" />
       </svg>
     ),
   },
   {
     label: "LinkedIn",
-    href: "#",
+    href: "https://www.linkedin.com/in/arslanderyaa/",
     svg: (
       <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
         <path
@@ -43,7 +42,7 @@ const social = [
   },
   {
     label: "Instagram",
-    href: "#",
+    href: "https://www.instagram.com/psikologderyaarslan?igsh=MTFtMzhsdXlwbnYzcw==",
     svg: (
       <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
         <path
@@ -53,29 +52,12 @@ const social = [
       </svg>
     ),
   },
-  {
-    label: "Facebook",
-    href: "#",
-    svg: (
-      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
-        <path
-          fill="currentColor"
-          d="M22 12A10 10 0 1010 22v-7H7v-3h3V9a4 4 0 014-4h3v3h-2c-1 0-1 .5-1 1v3h3l-1 3h-2v7A10 10 0 0022 12z"
-        />
-      </svg>
-    ),
-  },
 ];
 
 const siteMap = [
-  { label: "Anasayfa", href: "#" },
-  { label: "Hakkımda", href: "#" },
-  { label: "Bloglar", href: "#" },
-];
-
-const legal = [
-  { label: "Privacy Policy", href: "#" },
-  { label: "Terms of Services", href: "#" },
+  { label: "Anasayfa", href: "/" },
+  { label: "Hakkımda", href: "/hakkimda" },
+  { label: "Bloglar", href: "/bloglar" },
 ];
 
 function BackToTopButton() {
@@ -99,6 +81,34 @@ function BackToTopButton() {
 }
 
 export default function BlogFooter() {
+  const navigate = useNavigate();
+
+  const [blogPostList, setBlogPostList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const getTrendingPosts = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axiosInstance.get(
+        API_PATHS.POSTS.GET_TRENDING_POSTS
+      );
+      setBlogPostList(response.data?.length > 0 ? response.data : []);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(`Verileri çekerken hata oluştu: ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleClick = (post) => {
+    navigate(`/blog/${post.slug}`);
+  };
+
+  useEffect(() => {
+    getTrendingPosts();
+  }, []);
+
   return (
     <footer className="relative w-full bg-black text-white">
       <svg
@@ -162,12 +172,11 @@ export default function BlogFooter() {
             </div>
           </div>
 
-          {/* Right link columns */}
           <div className="md:col-span-7 lg:col-span-8 md:pl-8">
             <div className="grid grid-cols-2 gap-10 md:gap-14 lg:gap-24">
               <nav>
                 <h3 className="text-sm font-semibold text-grey-100">
-                  Site Map
+                  Site Haritası
                 </h3>
                 <ul className="mt-3 space-y-2.5">
                   {siteMap.map((l) => (
@@ -182,18 +191,19 @@ export default function BlogFooter() {
                   ))}
                 </ul>
               </nav>
-
               <nav>
-                <h3 className="text-sm font-semibold text-grey-100">Legal</h3>
+                <h3 className="text-sm font-semibold text-grey-100">
+                  Popüler Yazılar
+                </h3>
                 <ul className="mt-3 space-y-2.5">
-                  {legal.map((l) => (
-                    <li key={l.label}>
-                      <a
-                        href={l.href}
-                        className="text-sm text-grey-50/85 hover:underline underline-offset-4"
+                  {blogPostList.slice(0, 4).map((post) => (
+                    <li key={post._id}>
+                      <button
+                        onClick={() => handleClick(post)}
+                        className="text-sm text-grey-50/85 hover:underline underline-offset-4 text-left"
                       >
-                        {l.label}
-                      </a>
+                        {post.title}
+                      </button>
                     </li>
                   ))}
                 </ul>

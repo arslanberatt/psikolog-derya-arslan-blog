@@ -89,7 +89,7 @@ const Login = ({ setCurrentPage }) => {
           <p className="text-[13px] text-slate-800 mt-3">
             Hesabınız yok mu?{" "}
             <button
-              className="font-medium text-primary underline cursor-pointer"
+              className="font-medium text-sky-300 underline cursor-pointer"
               onClick={() => {
                 setCurrentPage("signup");
               }}

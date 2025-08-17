@@ -73,7 +73,7 @@ const SignUp = ({ setCurrentPage }) => {
             value={fullName}
             onChange={({ target }) => setFullName(target.value)}
             label="İsim Soyisim"
-            placeholder="Derya Arslan"
+            placeholder="İsim Soyisim"
             type="text"
           />
           <Input
@@ -97,7 +97,7 @@ const SignUp = ({ setCurrentPage }) => {
           <p className="text-[13px] text-slate-800 mt-3">
             Zaten bir hesabnız var mı?{" "}
             <button
-              className="font-medium text-primary underline cursor-pointer"
+              className="font-medium text-sky-300 underline cursor-pointer"
               onClick={() => {
                 setCurrentPage("login");
               }}
