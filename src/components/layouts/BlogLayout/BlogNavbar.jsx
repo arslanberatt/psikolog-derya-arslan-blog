@@ -8,9 +8,9 @@ import SideMenu from "../SideMenu";
 import { UserContext } from "../../../context/userContext";
 import ProfileInfoCard from "../../Cards/ProfileInfoCard";
 import Login from "../../Auth/Login";
-import Signup from "../../Auth/Signup";
 import Modal from "../../Modal";
 import SearchBarPopup from "../../../pages/Client/components/SearchBarPopup";
+import SignUp from "../../Auth/SignUp";
 
 const BlogNavbar = ({ activeMenu }) => {
   const { user, setOpenAuthForm } = useContext(UserContext);
@@ -110,7 +110,7 @@ const AuthModel = () => {
         <div className="">
           {currentPage === "login" && <Login setCurrentPage={setCurrentPage} />}
           {currentPage === "signup" && (
-            <Signup setCurrentPage={setCurrentPage} />
+            <SignUp setCurrentPage={setCurrentPage} />
           )}
         </div>
       </Modal>
