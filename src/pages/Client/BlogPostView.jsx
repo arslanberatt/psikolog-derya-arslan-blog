@@ -13,6 +13,7 @@ import { sanitizeMarkdown } from "../../utils/helper";
 import CommentReplyInput from "../../components/Inputs/CommentReplyInput";
 import CommentInfoCard from "./components/CommentInfoCard";
 import LikeCommentButton from "./components/LikeCommentButton";
+import { Helmet } from "react-helmet-async";
 
 const BlogPostView = () => {
   const { slug } = useParams();
@@ -88,14 +89,13 @@ const BlogPostView = () => {
     <BlogLayout>
       {blogPostData && (
         <>
-          <title>
-            {blogPostData.title}
-            <meta name="description" content={blogPostData.title} />
-            <meta property="og:title" content={blogPostData.title} />
-            <meta property="og:image" content={blogPostData.coverImageUrl} />
-            <meta property="og:type" content="article" />
-            <meta property="og:locale" content="tr_TR" />
-          </title>
+          <Helmet>
+            <title>{blogPostData.title} | Psikolog Derya Arslan</title>
+            <meta
+              name="description"
+              content={`${blogPostData.title} yazısı `}
+            />
+          </Helmet>
 
           <div className="grid grid-cols-12 gap-8 relative">
             <div className="col-span-12 md:col-span-8 relative">

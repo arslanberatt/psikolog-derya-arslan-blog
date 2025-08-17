@@ -16,6 +16,7 @@ import ServiceList from "./pages/Admin/ServiceList";
 import ExperienceList from "./pages/Admin/ExperienceList";
 import ClientLandingPage from "./pages/Client/ClientLandingPage";
 import { AboutPage } from "./pages/Client/AboutPage";
+import NotFound from "./pages/Client/NotFound";
 
 const App = () => {
   return (
@@ -26,7 +27,7 @@ const App = () => {
             <Route path="/" element={<ClientLandingPage />} />
             <Route path="/bloglar" element={<BlogPage />} />
             <Route path="/hakkimda" element={<AboutPage />} />
-            <Route path="/:slug" element={<BlogPostView />} />
+            <Route path="/blog/:slug" element={<BlogPostView />} />
             <Route path="/tag/:tagName" element={<PostByTags />} />
             <Route path="/search" element={<SearchPosts />} />
 
@@ -45,6 +46,7 @@ const App = () => {
             </Route>
 
             <Route path="/admin-login" element={<AdminLogin />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
       </div>

@@ -26,7 +26,7 @@ const TrendingPostsList = () => {
   };
 
   const handleClick = (post) => {
-    navigate(`/${post.slug}`);
+    navigate(`/blog/${post.slug}`);
   };
 
   useEffect(() => {

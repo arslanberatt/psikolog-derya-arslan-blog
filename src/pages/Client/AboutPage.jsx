@@ -3,6 +3,7 @@ import BlogLayout from "../../components/layouts/BlogLayout/BlogLayout";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import DetailSectionSkeleton from "./components/skeletons/DetailSectionSkeleton";
+import { Helmet } from "react-helmet-async";
 
 export const AboutPage = () => {
   const [about, setAbout] = useState(null);
@@ -34,6 +35,13 @@ export const AboutPage = () => {
 
   return (
     <BlogLayout activeMenu="Hakkımda">
+      <Helmet>
+        <title>Hakkımda | Psikolog Derya Arslan</title>
+        <meta
+          name="description"
+          content="Psikolog Derya Arslan Hakkında Her Şey"
+        />
+      </Helmet>
       <div className="grid grid-cols-12 gap-5 md:px-4">
         {/* SOL İÇERİK: Hakkımda metni */}
         <div className="col-span-12 md:col-span-9">
