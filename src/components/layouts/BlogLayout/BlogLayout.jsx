@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import BlogNavbar from "./BlogNavbar";
 import BlogFooter from "./BlogFooter";
 
 const BlogLayout = ({ children, activeMenu }) => {
+  const footerRef = useRef(null);
   return (
     <div className="bg-primary">
       <BlogNavbar activeMenu={activeMenu} />

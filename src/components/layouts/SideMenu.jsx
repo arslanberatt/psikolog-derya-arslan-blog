@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { BLOG_NAVBAR_DATA, SIDE_MENU_DATA } from "../../utils/data";
-import { LuLogOut } from "react-icons/lu";
+import { LuLogOut, LuPhone } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import CharAvatar from "../Cards/CharAvatar";
 import { UserContext } from "../../context/userContext";
@@ -14,6 +14,17 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
       handleLogout();
       return;
     }
+
+    // 👇 Eğer route footer ise scroll yap
+    if (route === "#footer") {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+      });
+      setOpenSideMenu(false);
+      return;
+    }
+
     setOpenSideMenu((prevState) => !prevState);
     navigate(route);
   };
@@ -59,6 +70,14 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
           {item.label}
         </button>
       ))}
+      <button
+        className="w-full flex items-center gap-4 text-[15px] py-3 px-6 rounded-lg mb-3 cursor-pointer"
+        onClick={() => handleClick("#footer")}
+      >
+        <LuPhone className="text-xl" />
+        İletişim
+      </button>
+
       {user && (
         <button
           className={`w-full flex items-center gap-4 text-[15px] py-3 px-6 rounded-lg mb-3 cursor-pointer`}

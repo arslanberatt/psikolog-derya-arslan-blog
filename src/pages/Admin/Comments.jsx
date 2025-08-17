@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { useNavigate } from "react-router-dom";
-import { comment } from "@uiw/react-md-editor";
 import moment from "moment";
 import CommentInfoCard from "../../components/Cards/CommentInfoCard";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import DeleteAlertContent from "../../components/DeleteAlertContent";
 import Modal from "../../components/Modal";
+import { toast } from "react-toastify";
 
 const Comments = () => {
   const navigate = useNavigate();

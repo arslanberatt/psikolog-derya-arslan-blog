@@ -8,7 +8,7 @@ export const API_PATHS = {
   },
 
   IMAGE: {
-    UPLOAD_IMAGE: "/api/auth/upload-image", // Profil fotoğrafı yükle
+    UPLOAD_IMAGE: "/api/auth/upload-image", // auth değil image altında
   },
 
   DASHBOARD: {
@@ -39,13 +39,6 @@ export const API_PATHS = {
     GET_ALL: "/api/service",
     UPDATE: (id) => `/api/service/${id}`,
     DELETE: (id) => `/api/service/${id}`,
-  },
-
-  EXPERIENCE: {
-    CREATE: "/api/experience",
-    GET_ALL: "/api/experience",
-    UPDATE: (id) => `/api/experience/${id}`,
-    DELETE: (id) => `/api/experience/${id}`,
   },
 
   COMMENTS: {

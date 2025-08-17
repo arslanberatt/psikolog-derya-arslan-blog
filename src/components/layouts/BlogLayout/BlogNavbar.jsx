@@ -16,15 +16,24 @@ const BlogNavbar = ({ activeMenu }) => {
   const { user, setOpenAuthForm } = useContext(UserContext);
   const [openSideMenu, setOpenSideMenu] = useState(false);
   const [openSearchBar, setOpenSearchBar] = useState(false);
+
+  // burada genel scroll fonksiyonunu tanımlıyoruz
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    });
+    setOpenSideMenu(false); // side menu açıksa kapat
+  };
+
   return (
     <>
-      <div className="bg-white  border border-b border-gray-200/50 backdrop-blur-[2px] py-4 px-7 sticky top-0 z-30">
+      <div className="bg-white border-b border-gray-200/50 backdrop-blur-[2px] py-4 px-7 sticky top-0 z-30">
         <div className="container mx-auto flex items-center justify-between gap-5">
+          {/* Hamburger Menu */}
           <button
             className="block md:hidden text-black -mt-1"
-            onClick={() => {
-              setOpenSideMenu(!openSideMenu);
-            }}
+            onClick={() => setOpenSideMenu(!openSideMenu)}
           >
             {openSideMenu ? (
               <HiOutlineX className="text-2xl" />
@@ -33,26 +42,48 @@ const BlogNavbar = ({ activeMenu }) => {
             )}
           </button>
 
+          {/* Logo */}
           <Link to="/">
             <img src={Logo} className="h-[48px] md:h-[64px]" />
           </Link>
+
+          {/* Navbar Links */}
           <nav className="hidden md:flex items-center gap-10">
-            {BLOG_NAVBAR_DATA.map((item, index) => {
-              if (item?.onlySideMenu) return;
+            {BLOG_NAVBAR_DATA.map((item) => {
+              if (item?.onlySideMenu) return null;
               return (
-                <Link key={item.id} to={item.path}>
-                  <li className="text-[15px] text-black font-medium list-none relative group cursor-pointer:">
+                <Link
+                  key={item.id}
+                  to={item.path}
+                  onClick={() => window.scrollTo(0, 0)}
+                >
+                  <li className="text-[15px] text-black font-medium list-none relative group cursor-pointer">
                     {item.label}
                     <span
                       className={`absolute inset-x-0 bottom-0 h-[2px] ${
                         activeMenu == item.label ? "scale-x-100" : "scale-x-0"
-                      }  bg-sky-500 transition-all duration-500 origin-left group-hover:scale-x-100`}
+                      } bg-sky-500 transition-all duration-500 origin-left group-hover:scale-x-100`}
                     ></span>
                   </li>
                 </Link>
               );
             })}
+
+            {/* İletişim Butonu */}
+            <button
+              onClick={scrollToBottom}
+              className="text-[15px] text-black font-medium list-none relative group cursor-pointer"
+            >
+              İletişim
+              <span
+                className={`absolute inset-x-0 bottom-0 h-[2px] ${
+                  activeMenu == "İletişim" ? "scale-x-100" : "scale-x-0"
+                } bg-sky-500 transition-all duration-500 origin-left group-hover:scale-x-100`}
+              ></span>
+            </button>
           </nav>
+
+          {/* Sağdaki Login / Profil */}
           <div className="flex items-center gap-6">
             <button
               className="hover:text-sky-500 cursor-pointer"
@@ -74,17 +105,22 @@ const BlogNavbar = ({ activeMenu }) => {
               </div>
             )}
           </div>
+
+          {/* SideMenu */}
           {openSideMenu && (
             <div className="fixed top-[85px] -ml-4 bg-white">
               <SideMenu
                 activeMenu={activeMenu}
                 isBlogMenu
                 setOpenSideMenu={setOpenSideMenu}
+                scrollToBottom={scrollToBottom} // iletişim için side menüye de gönderiyoruz
               />
             </div>
           )}
         </div>
       </div>
+
+      {/* Auth & Search Modals */}
       <AuthModel />
       <SearchBarPopup isOpen={openSearchBar} setIsOpen={setOpenSearchBar} />
     </>
@@ -98,22 +134,18 @@ const AuthModel = () => {
   const [currentPage, setCurrentPage] = useState("login");
 
   return (
-    <>
-      <Modal
-        isOpen={openAuthForm}
-        onClose={() => {
-          setOpenAuthForm(false);
-          setCurrentPage("login");
-        }}
-        hideHeader
-      >
-        <div className="">
-          {currentPage === "login" && <Login setCurrentPage={setCurrentPage} />}
-          {currentPage === "signup" && (
-            <SignUp setCurrentPage={setCurrentPage} />
-          )}
-        </div>
-      </Modal>
-    </>
+    <Modal
+      isOpen={openAuthForm}
+      onClose={() => {
+        setOpenAuthForm(false);
+        setCurrentPage("login");
+      }}
+      hideHeader
+    >
+      <div>
+        {currentPage === "login" && <Login setCurrentPage={setCurrentPage} />}
+        {currentPage === "signup" && <SignUp setCurrentPage={setCurrentPage} />}
+      </div>
+    </Modal>
   );
 };

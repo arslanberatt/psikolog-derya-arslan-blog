@@ -16,7 +16,7 @@ const uploadImage = async (imageFile) => {
       }
     );
     return response.data;
-  } catch {
+  } catch (error) {
     console.error("Fotoğraf yüklenirken hata oluştu", error);
     throw error;
   }
