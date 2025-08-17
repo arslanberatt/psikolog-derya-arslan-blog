@@ -1,8 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import BlogLayout from "../../components/layouts/BlogLayout/BlogLayout";
+import { useEffect } from "react";
 
 const NotFound = () => {
+  useEffect(() => {
+    document.title = "404 | Sayfa Bulunamadı";
+
+    const metaDescription = document.querySelector("meta[name='description']");
+    const desc =
+      "Aradığınız sayfa bulunamadı. Klinik Psikolog Derya Arslan’ın blog ve içeriklerine geri dönmek için ana sayfayı ziyaret edin.";
+
+    if (metaDescription) {
+      metaDescription.setAttribute("content", desc);
+    } else {
+      const newMeta = document.createElement("meta");
+      newMeta.name = "description";
+      newMeta.content = desc;
+      document.head.appendChild(newMeta);
+    }
+  }, []);
   return (
     <BlogLayout>
       <div className="flex flex-col items-center justify-center min-h-96 text-center">
