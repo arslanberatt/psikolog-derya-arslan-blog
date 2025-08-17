@@ -8,7 +8,6 @@ import { API_PATHS } from "../../utils/apiPaths";
 import moment from "moment";
 import StoriesGrid from "./components/StoriesGrid";
 import SummaryCardSkeleton from "./components/skeletons/SummaryCardSkeleton";
-import { Helmet } from "react-helmet-async";
 
 const ClientLandingPage = () => {
   const navigate = useNavigate();
@@ -37,6 +36,20 @@ const ClientLandingPage = () => {
 
   useEffect(() => {
     getAllPosts();
+    document.title = "Blog & Yazılar | Klinik Psikolog Derya Arslan";
+
+    const metaDescription = document.querySelector("meta[name='description']");
+    const desc =
+      "Psikolog Derya Arslan’ın son yazılarını keşfedin. Psikoloji, danışmanlık ve kişisel gelişim üzerine güncel içerikler.";
+
+    if (metaDescription) {
+      metaDescription.setAttribute("content", desc);
+    } else {
+      const newMeta = document.createElement("meta");
+      newMeta.name = "description";
+      newMeta.content = desc;
+      document.head.appendChild(newMeta);
+    }
   }, []);
 
   const handleClick = (post) => {
@@ -45,10 +58,6 @@ const ClientLandingPage = () => {
 
   return (
     <BlogLayout activeMenu="Anasayfa">
-      <Helmet>
-        <title>Anasayfa | Psikolog Derya Arslan</title>
-        <meta name="description" content="Psikolog Derya Arslan Anasayfası" />
-      </Helmet>
       <div className="grid grid-cols-12 gap-5 md:px-4">
         <div className="col-span-12 ">
           <HeaderSection

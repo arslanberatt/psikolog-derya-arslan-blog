@@ -6,7 +6,6 @@ import BlogPostSummaryCard from "./components/BlogPostSummaryCard";
 import moment from "moment";
 import BlogLayout from "../../components/layouts/BlogLayout/BlogLayout";
 import TrendingPostsList from "./components/TrendingPostsList";
-import { Helmet } from "react-helmet-async";
 
 const PostByTags = () => {
   const { tagName } = useParams();
@@ -28,7 +27,7 @@ const PostByTags = () => {
   };
 
   const handleClick = (post) => {
-    navigate(`/${post.slug}`);
+    navigate(`/blog/${post.slug}`);
   };
 
   useEffect(() => {
@@ -36,15 +35,29 @@ const PostByTags = () => {
     return () => {};
   }, [tagName]);
 
+  useEffect(() => {
+    if (tagName) {
+      document.title = `${tagName} | Klinik Psikolog Derya Arslan`;
+
+      // Description güncelle
+      const metaDescription = document.querySelector(
+        "meta[name='description']"
+      );
+      const desc = `#${tagName} etiketiyle yazılmış ${blogPostList.length} adet blog yazısı.`;
+
+      if (metaDescription) {
+        metaDescription.setAttribute("content", desc);
+      } else {
+        const newMeta = document.createElement("meta");
+        newMeta.name = "description";
+        newMeta.content = desc;
+        document.head.appendChild(newMeta);
+      }
+    }
+  }, [tagName, blogPostList.length]);
+
   return (
     <BlogLayout>
-      <Helmet>
-        <title>{tagName} | Psikolog Derya Arslan</title>
-        <meta
-          name="description"
-          content={`${tagName} ile ilgili tüm yazılar ve içerikler Psikolog Derya Arslan blogunda.`}
-        />
-      </Helmet>
       <div className="grid grid-cols-12 gap-5">
         <div className="col-span-12 md:col-span-9">
           <div className="flex items-center justify-center bg-linear-to-r from-sky-50 via-teal-50 to-cyan-100 h-32 p-6 rounded-lg">

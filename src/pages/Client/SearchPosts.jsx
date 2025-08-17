@@ -5,7 +5,6 @@ import { API_PATHS } from "../../utils/apiPaths";
 import BlogLayout from "../../components/layouts/BlogLayout/BlogLayout";
 import BlogPostSummaryCard from "./components/BlogPostSummaryCard";
 import moment from "moment";
-import { Helmet } from "react-helmet-async";
 
 const SearchPosts = () => {
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ const SearchPosts = () => {
   };
 
   const handleClick = (post) => {
-    navigate(`/${post.slug}`);
+    navigate(`/blog/${post.slug}`);
   };
 
   useEffect(() => {
@@ -36,13 +35,29 @@ const SearchPosts = () => {
     return () => {};
   }, [query]);
 
+  useEffect(() => {
+    if (query) {
+      document.title = `${query} | Klinik Psikolog Derya Arslan`;
+      const metaDescription = document.querySelector(
+        "meta[name='description']"
+      );
+      if (metaDescription) {
+        metaDescription.setAttribute(
+          "content",
+          `"${query}" araması için bulunan yazılar.`
+        );
+      } else {
+        const newMeta = document.createElement("meta");
+        newMeta.name = "description";
+        newMeta.content = `"${query}" araması için bulunan yazılar.`;
+        document.head.appendChild(newMeta);
+      }
+    }
+  }, [query]);
+
   return (
     <BlogLayout>
       <div className="h-screen">
-        <Helmet>
-          <title>{query} | Psikolog Derya Arslan</title>
-          <meta name="description" content="Psikolog Derya Arslan Arama" />
-        </Helmet>
         <h3 className="text-lg font-medium">
           "<span className="font-semibold">{query}" </span>
           aramasına özel sonuçlar

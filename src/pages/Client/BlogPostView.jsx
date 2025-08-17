@@ -13,7 +13,6 @@ import { sanitizeMarkdown } from "../../utils/helper";
 import CommentReplyInput from "../../components/Inputs/CommentReplyInput";
 import CommentInfoCard from "./components/CommentInfoCard";
 import LikeCommentButton from "./components/LikeCommentButton";
-import { Helmet } from "react-helmet-async";
 
 const BlogPostView = () => {
   const { slug } = useParams();
@@ -82,21 +81,34 @@ const BlogPostView = () => {
   };
 
   useEffect(() => {
-    fetchPostDetailBySlug();
-  }, [slug]);
+    if (slug) {
+      fetchPostDetailBySlug();
+      document.title = `${
+        blogPostData?.title || "Blog Yazısı"
+      } | Klinik Psikolog Derya Arslan`;
+
+      const metaDescription = document.querySelector(
+        "meta[name='description']"
+      );
+      const desc =
+        blogPostData?.content?.slice(0, 150) ||
+        "Psikolog Derya Arslan’ın blog yazısını keşfedin.";
+
+      if (metaDescription) {
+        metaDescription.setAttribute("content", desc);
+      } else {
+        const newMeta = document.createElement("meta");
+        newMeta.name = "description";
+        newMeta.content = desc;
+        document.head.appendChild(newMeta);
+      }
+    }
+  }, [slug, blogPostData]);
 
   return (
     <BlogLayout>
       {blogPostData && (
         <>
-          <Helmet>
-            <title>{blogPostData.title} | Psikolog Derya Arslan</title>
-            <meta
-              name="description"
-              content={`${blogPostData.title} yazısı `}
-            />
-          </Helmet>
-
           <div className="grid grid-cols-12 gap-8 relative">
             <div className="col-span-12 md:col-span-8 relative">
               <h1 className="text-lg md:text-2xl font-bold mb-2 line-clamp-3">

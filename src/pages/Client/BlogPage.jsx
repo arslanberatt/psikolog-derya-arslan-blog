@@ -10,7 +10,6 @@ import BlogPostSummaryCard from "./components/BlogPostSummaryCard";
 import TrendingPostsList from "./components/TrendingPostsList";
 import FeaturedSkeleton from "./components/skeletons/FeaturedSkeleton";
 import SummaryCardSkeleton from "./components/skeletons/SummaryCardSkeleton";
-import { Helmet } from "react-helmet-async";
 
 const BlogPage = () => {
   const navigate = useNavigate();
@@ -45,6 +44,20 @@ const BlogPage = () => {
 
   useEffect(() => {
     getAllPosts(1);
+
+    document.title = "Blog Yazıları | Klinik Psikolog Derya Arslan";
+    const metaDescription = document.querySelector("meta[name='description']");
+    const desc =
+      "Psikolog Derya Arslan’ın blog yazılarını keşfedin. Psikoloji, danışmanlık ve kişisel gelişim üzerine güncel içerikler.";
+
+    if (metaDescription) {
+      metaDescription.setAttribute("content", desc);
+    } else {
+      const newMeta = document.createElement("meta");
+      newMeta.name = "description";
+      newMeta.content = desc;
+      document.head.appendChild(newMeta);
+    }
   }, []);
 
   const handleClick = (post) => navigate(`/blog/${post.slug}`);
@@ -53,10 +66,6 @@ const BlogPage = () => {
 
   return (
     <BlogLayout activeMenu="Bloglar">
-      <Helmet>
-        <title>Bloglar | Psikolog Derya Arslan</title>
-        <meta name="description" content={`Psikolog Derya Arslan Yazıları`} />
-      </Helmet>
       <div className="grid grid-cols-12 gap-5 md:px-4">
         <div className="col-span-12 md:col-span-9">
           {isInitialLoading ? (
