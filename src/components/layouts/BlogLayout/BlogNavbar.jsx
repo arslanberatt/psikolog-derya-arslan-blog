@@ -28,7 +28,10 @@ const BlogNavbar = ({ activeMenu }) => {
 
   return (
     <>
-      <div className="bg-white border-b border-gray-200/50 backdrop-blur-[2px] py-4 px-7 sticky top-0 z-30">
+      <div
+        style={{ backgroundColor: "#fdfdfd" }}
+        className="border-b border-gray-200/50 backdrop-blur-[2px] py-4 px-7 sticky top-0 z-30"
+      >
         <div className="container mx-auto flex items-center justify-between gap-5">
           {/* Hamburger Menu */}
           <button
