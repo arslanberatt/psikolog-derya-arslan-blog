@@ -1,4 +1,5 @@
 import React from "react";
+import { normalizeImageUrl } from "../../utils/imageUrl";
 import { LuHeart } from "react-icons/lu";
 
 const TopPostCard = ({ title, coverImageUrl, views, likes, maxViews }) => {
@@ -7,7 +8,7 @@ const TopPostCard = ({ title, coverImageUrl, views, likes, maxViews }) => {
     <div className="bg-white py-4 flex flex-col gap-3 border-b border-gray-100">
       <div className="flex items-center gap-2">
         <img
-          src={coverImageUrl}
+          src={normalizeImageUrl(coverImageUrl)}
           alt="blog cover image"
           className="w-10 h-10 rounded-md object-cover"
         />

@@ -1,4 +1,5 @@
 import React from "react";
+import { normalizeImageUrl } from "../../../utils/imageUrl";
 import CharAvatar from "../../../components/Cards/CharAvatar";
 import MarkdownContent from "./MarkdownContent";
 import { sanitizeMarkdown } from "../../../utils/helper";
@@ -18,7 +19,7 @@ const BlogPostSummaryCard = ({
       onClick={onClick}
     >
       <img
-        src={coverImageUrl}
+        src={normalizeImageUrl(coverImageUrl)}
         alt={title}
         className="w-full lg:h-64 h-72 object-cover border border-gray-100 rounded-lg"
       />

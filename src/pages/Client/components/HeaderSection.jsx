@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
+import { normalizeImageUrl } from "../../../utils/imageUrl";
 import { API_PATHS } from "../../../utils/apiPaths";
 
 const HeaderSection = ({ link, text }) => {
@@ -86,7 +87,7 @@ const HeaderSection = ({ link, text }) => {
         <div className="overflow-hidden rounded-2xl border border-neutral-200 shadow-sm">
           <div className="relative">
             <img
-              src={about?.profileImageUrl}
+              src={normalizeImageUrl(about?.profileImageUrl)}
               alt={about?.title || "Profil fotoğrafı"}
               className="aspect-[3/2] md:aspect-[4/3] w-full object-cover"
               loading="lazy"

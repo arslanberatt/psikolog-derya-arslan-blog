@@ -5,6 +5,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import BlogLayout from "../../components/layouts/BlogLayout/BlogLayout";
 import moment from "moment";
+import { normalizeImageUrl } from "../../utils/imageUrl";
 import { LuDot } from "react-icons/lu";
 import TrendingPostsList from "./components/TrendingPostsList";
 import MarkdownContent from "./components/MarkdownContent";
@@ -147,7 +148,7 @@ const BlogPostView = () => {
               </div>
 
               <img
-                src={blogPostData.coverImageUrl || ""}
+                src={normalizeImageUrl(blogPostData.coverImageUrl || "")}
                 alt={blogPostData.title}
                 className="w-full h-96 object-cover mb-6 rounded-lg"
               />

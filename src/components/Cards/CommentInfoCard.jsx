@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { normalizeImageUrl } from "../../utils/imageUrl";
 import { LuChevronDown, LuDot, LuReply, LuTrash2 } from "react-icons/lu";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/userContext";
@@ -113,7 +114,7 @@ const CommentInfoCard = ({
         {!isSubReply && (
           <div className="col-span-12 md:col-span-4 order-1 md:order-2 flex items-center gap-4">
             <img
-              src={post?.coverImageUrl}
+              src={normalizeImageUrl(post?.coverImageUrl)}
               alt="blog photo"
               className="w-16 h-10 rounded-lg object-cover"
             />

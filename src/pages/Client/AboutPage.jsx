@@ -3,6 +3,7 @@ import BlogLayout from "../../components/layouts/BlogLayout/BlogLayout";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import DetailSectionSkeleton from "./components/skeletons/DetailSectionSkeleton";
+import { normalizeImageUrl } from "../../utils/imageUrl";
 
 export const AboutPage = () => {
   const [about, setAbout] = useState(null);
@@ -91,7 +92,7 @@ export const AboutPage = () => {
                 )}
                 <div className="md:col-span-4 rounded-xl overflow-hidden border border-gray-200 bg-white">
                   <img
-                    src={about?.profileImageUrl}
+                    src={normalizeImageUrl(about?.profileImageUrl)}
                     alt={about?.title}
                     className="w-full h-full object-cover"
                     loading="lazy"

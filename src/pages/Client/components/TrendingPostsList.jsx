@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { API_PATHS } from "../../../utils/apiPaths";
 import axiosInstance from "../../../utils/axiosInstance";
 import TrendingPostSkeleton from "./skeletons/TrendingPostSkeleton";
+import { normalizeImageUrl } from "../../../utils/imageUrl";
 
 const TrendingPostsList = () => {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ const TrendingPostsList = () => {
             <PostCard
               key={item._id}
               title={item.title}
-              coverImageUrl={item.coverImageUrl}
+              coverImageUrl={normalizeImageUrl(item.coverImageUrl)}
               tags={item.tags}
               onClick={() => handleClick(item)}
             />

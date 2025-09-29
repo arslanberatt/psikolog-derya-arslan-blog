@@ -1,4 +1,5 @@
 import React from "react";
+import { normalizeImageUrl } from "../../utils/imageUrl";
 import moment from "moment";
 import { LuDot } from "react-icons/lu";
 import CharAvatar from "./CharAvatar";
@@ -35,7 +36,7 @@ const RecentCommentsList = ({ comments }) => {
               </div>
               <div className="mt-2 flex items-center gap-3">
                 <img
-                  src={comment.post?.coverImageUrl}
+                  src={normalizeImageUrl(comment.post?.coverImageUrl)}
                   alt={comment.post?.title}
                   className="w-9 h-9 rounded-md object-cover"
                 />
